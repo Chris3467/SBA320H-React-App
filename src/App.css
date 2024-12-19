@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, fantasy;
+  video.background-clip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(136, 32, 32);
+  padding: 10px;
+  font-family: fantasy;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: rgb(219, 217, 217);
+  padding: 10px;
+}
+
+h2 {
+  position: relative; /* Positioning needed for pseudo-element */
+  width: 250px;
+  margin: 20px auto;
+  padding: 10px 15px;
+  text-align: center;
+  font-family: fantasy;
+  border: solid 2px rgb(136, 32, 32);
+  background-color: rgb(219, 217, 217);
+  border-radius: 15px; /* Rounds the edges to look like a bubble */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+  animation: bounce 2s infinite; /* Adds the animation */
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  bottom: -12px; /* Position the arrow below the bubble */
+  left: 50%; /* Center horizontally relative to the bubble */
+  transform: translateX(-50%); /* Adjust for the arrow's width */
+  width: 0;
+  height: 0;
+  border-width: 12px; /* Size of the arrow */
+  border-style: solid;
+  border-color: rgb(136, 32, 32) transparent transparent transparent; /* Arrow color matches border */
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0); /* Start and end at the original position */
+  }
+  50% {
+    transform: translateY(-10px); /* Move up by 10px */
+  }
+}
