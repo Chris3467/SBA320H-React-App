@@ -1,11 +1,12 @@
 // src/App.js
 import React from "react";
 import { Route, Routes } from "react-router";
-import Home from "./components/Home";
-import GamingTrivia from "./components/GamingTrivia";
-import AnimeTrivia from "./components/AnimeTrivia";
-import MoviesTrivia from "./components/MoviesTrivia";
+import Home from "./pages/Home";
+import GamingTrivia from "./pages/GamingTrivia";
+import AnimeTrivia from "./pages/AnimeTrivia";
+import MoviesTrivia from "./pages/MoviesTrivia";
 import Nav from "./components/Nav";
+
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         Your browser does not support the video tag.
       </video>
       <Nav />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/gaming" element={<GamingTrivia />} />

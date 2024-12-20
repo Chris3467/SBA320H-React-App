@@ -72,3 +72,28 @@ h2::before {
     transform: translateY(-10px); /* Move up by 10px */
   }
 }
+
+.trivia-form {
+  position: relative;
+  width: 250px;
+  margin: 20px auto;
+  padding: 10px 15px;
+  align-items: center;
+  margin-top: 20px;
+  background-color: rgb(219, 217, 217);
+  border: solid 2px rgb(136, 32, 32);
+  border-radius: 15px;
+  font-family: fantasy;
+}
+
+.trivia-questions {
+  position: relative;
+  width: 500px;
+  margin: 20px auto;
+  padding: 10px 15px;
+  align-items: center;
+  margin-top: 20px;
+  background-color: rgb(219, 217, 217);
+  border: solid 2px rgb(136, 32, 32);
+  border-radius: 15px;
+}
