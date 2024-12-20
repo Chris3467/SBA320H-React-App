@@ -90,10 +90,18 @@ h2::before {
   position: relative;
   width: 500px;
   margin: 20px auto;
-  padding: 10px 15px;
+  padding: 10px 25px;
   align-items: center;
   margin-top: 20px;
   background-color: rgb(219, 217, 217);
   border: solid 2px rgb(136, 32, 32);
   border-radius: 15px;
+  font-family: fantasy;
+}
+
+.load,
+.error {
+  font-family: fantasy;
+  color: rgb(136, 32, 32);
+  font-size: 20px;
 }

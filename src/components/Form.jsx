@@ -22,43 +22,72 @@ function Form({ category }) {
   const [loading, setLoading] = useState(false);
   // State to store the number of attempts for each question
   const [attempts, setAttempts] = useState({});
+  // State to store any error messages
+  const [error, setError] = useState(null);
 
-  // Function to fetch trivia questions from the API
-  const fetchTriviaQuestions = async () => {
-    setLoading(true); // Set loading to true while fetching data
-    const url = `https://opentdb.com/api.php?amount=${numQuestions}&category=${selectedCategory}&difficulty=${difficulty}&type=${questionType}`;
-    const response = await fetch(url); // Fetch data from the API
-    const data = await response.json(); // Parse the JSON response
-    setTriviaQuestions(data.results); // Update the state with fetched questions
-    setLoading(false); // Set loading to false after data is fetched
+  // Function to fetch trivia questions from the API with retry mechanism
+  // This prevents the app from crashing if the API request fails
+  const fetchTriviaQuestions = async (retryCount = 3, delay = 1000) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const url = `https://opentdb.com/api.php?amount=${numQuestions}&category=${selectedCategory}&difficulty=${difficulty}&type=${questionType}`;
+      console.log(`Fetching data from: ${url}`);
+      const response = await fetch(url);
+      if (!response.ok) {
+        if (retryCount > 0) {
+          console.log(`Retrying... Attempts left: ${retryCount - 1}`);
+          // Retry after a delay if the request fails
+          setTimeout(
+            () => fetchTriviaQuestions(retryCount - 1, delay * 2),
+            delay
+          );
+          return;
+        } else {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+      }
+      const data = await response.json();
+      if (data.results.length === 0) {
+        setError("No questions available for the selected options.");
+        setTriviaQuestions([]);
+      } else {
+        setTriviaQuestions(data.results);
+      }
+    } catch (err) {
+      console.error(err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // useEffect to fetch data whenever selectedCategory, difficulty, numQuestions, or questionType changes
   useEffect(() => {
     if (selectedCategory && difficulty && numQuestions && questionType) {
-      fetchTriviaQuestions(); // Fetch trivia questions if all options are selected
+      fetchTriviaQuestions();
     }
-  }, [selectedCategory, difficulty, numQuestions, questionType]); // Dependency array to trigger useEffect on option changes
+  }, [selectedCategory, difficulty, numQuestions, questionType]);
 
   // Handler for category change
   const handleCategoryChange = (evt) => {
-    setSelectedCategory(evt.target.value); // Update the selectedCategory state
+    setSelectedCategory(evt.target.value);
   };
 
   // Handler for difficulty change
   const handleDifficultyChange = (evt) => {
-    setDifficulty(evt.target.value); // Update the difficulty state
+    setDifficulty(evt.target.value);
   };
 
   // Handler for number of questions change
   const handleNumQuestionsChange = (evt) => {
-    const value = Math.min(5, Math.max(1, evt.target.value)); // Ensure the value is between 1 and 5
-    setNumQuestions(value); // Update the number of questions state
+    const value = Math.min(5, Math.max(1, evt.target.value));
+    setNumQuestions(value);
   };
 
   // Handler for question type change
   const handleQuestionTypeChange = (evt) => {
-    setQuestionType(evt.target.value); // Update the question type state
+    setQuestionType(evt.target.value);
   };
 
   // Handler for answer selection
@@ -125,9 +154,11 @@ function Form({ category }) {
         </label>
       </form>
       {loading ? (
-        <p>Loading...</p> // Display loading message while fetching data
+        <p className="load">Loading...</p> // Display loading message while fetching data
+      ) : error ? (
+        <p className="error">Error: {error}</p> // Display error message if data fetch fails
       ) : (
-        <ul className="trivia-questions">
+        <ol className="trivia-questions">
           {triviaQuestions.map((question, index) => (
             <li key={index}>
               <p>{decodeHtml(question.question)}</p>
@@ -144,7 +175,7 @@ function Form({ category }) {
                 ))}
             </li>
           ))}
-        </ul>
+        </ol>
       )}
     </div>
   );
