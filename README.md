@@ -1,9 +1,3 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 # SBA320H-React-App
+
+This project is a web application developed to demonstrate the skills learned in HTML, CSS, JavaScript, and React. It incorporates an external API to fetch and display dynamic data. The goal is to build a functional and interactive application that meets the requirements of the assignment while solving a practical or fictional problem creatively.
